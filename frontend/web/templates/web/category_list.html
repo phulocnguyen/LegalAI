@@ -1,0 +1,45 @@
+{% extends 'web/main.html' %}
+{% load static %}
+
+{% block main %}
+<section class="breadcrumbs">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center">
+      <h2>Danh mục</h2>
+      <ol>
+        <li><a href="/">Home</a></li>
+        <li>Danh mục</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="inner-page pt-4">
+  <link href="{% static 'assets/css/category_list.css' %}" rel="stylesheet">
+
+  <div class="small-list-container">
+    <form method="get">
+      <div class="col-md-8">
+      
+        <div class="search">
+          <i class="fa fa-search"></i>
+          <input type="text" class="form-control" name="q" value="{{ query }}" placeholder="Search...">
+          <button class="btn btn-primary" type="submit">Search</button>
+        </div>
+        
+      </div>
+      </form>
+
+  </div>
+
+  <!-- Thẻ div mới bao quanh danh sách -->
+  <div class="small-list-container">
+    <ol class="gradient-list">
+      {% for file in files %}
+      <li><a href="{% url 'file_detail' file.id %}">{{ file.title }}</a></li>
+      {% endfor %}
+    </ol>
+  </div>
+</section>
+
+{% endblock %}

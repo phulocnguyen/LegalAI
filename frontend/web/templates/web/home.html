@@ -1,0 +1,140 @@
+{% extends 'web/main.html' %}
+{% load static %}
+
+{% block main %}
+
+<!-- ======= Hero Section ======= -->
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+      var header = document.getElementById("header");
+      if (header) {
+          header.classList.add("header-transparent");
+      }
+  });
+</script>
+
+<section id="hero">
+  <div class="hero-container" data-aos="zoom-in" data-aos-delay="100">
+    <h1>Welcome to My web</h1>
+    <h2>Using my brain</h2>
+    <a href="/chat" class="btn-get-started">CHAT WITH AI NOW</a>
+    <a href="/blog" class="btn-get-started">Get Preview</a>
+  </div>
+</section><!-- End Hero Section -->
+
+
+<!-- ======= About Section ======= -->
+<section id="about">
+  <div class="container" data-aos="fade-up">
+    <div class="row about-container">
+
+      <div class="col-lg-6 content order-lg-1 order-2">
+        <h2 class="title">About Us</h2>
+        <p>
+          A brain tumor is a collection, or mass, of abnormal cells
+          in your brain. Your skull, which encloses your brain, is
+          very rigid. Any growth inside such a restricted space can
+          cause problems. Brain tumors can be cancerous (malignant)
+          or noncancerous (benign). When benign or malignant tumors
+          grow, they can cause the pressure inside your skull to increase.
+          This can cause brain damage, and it can be life-threatening.
+        </p>
+
+        <!--
+        <div class="icon-box" data-aos="fade-up" data-aos-delay="100">
+          <div class="icon"><i class="bi bi-briefcase"></i></div>
+          <h4 class="title"><a href="">Eiusmod Tempor</a></h4>
+          <p class="description">Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum
+            soluta nobis est eligendi</p>
+        </div>
+        -->
+
+      </div>
+
+      <div class="col-lg-6 background order-lg-2 order-1" data-aos="fade-left" data-aos-delay="100"></div>
+    </div>
+
+  </div>
+</section><!-- End About Section -->
+
+
+
+<!-- ======= Contact Section ======= -->
+<section id="contact">
+  <div class="container">
+    <div class="section-header">
+      <h3 class="section-title">Contact</h3>
+      <p class="section-description">You can send us feedback here</p>
+    </div>
+  </div>
+
+  <!-- Uncomment below if you want to use dynamic maps -->
+  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3723.8683133802033!2d105.78079837529022!3d21.037954480613568!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x313454caaf9fa467%3A0xe0207e2709fbbcd0!2sG2%20auditorium%2C%20University%20of%20Engineering%20and%20Technology%20-%20Vietnam%20National%20University!5e0!3m2!1sen!2s!4v1715803512471!5m2!1sen!2s" width="100%" height="380" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+
+      <div class="col-lg-3 col-md-4">
+
+        <div class="info">
+          <div>
+            <i class="bi bi-geo-alt"></i>
+            <p>144 Xuan Thuy<br>Ha Noi, Viet Nam</p>
+          </div>
+
+          <div>
+            <i class="bi bi-envelope"></i>
+            <p>info@example.com</p>
+          </div>
+
+          <div>
+            <i class="bi bi-phone"></i>
+            <p>(+84) xxx xxx xxx</p>
+          </div>
+        </div>
+
+        <div class="social-links">
+          <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+          <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+          <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+        </div>
+
+      </div>
+
+      
+      <div class="col-lg-5 col-md-8">
+        <div class="form">
+          <form action="{% url 'home' %}" method="post" role="form" class="php-email-form">
+            {% csrf_token %}
+            <div class="form-group">
+              <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
+            </div>
+            <div class="form-group mt-3">
+              <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
+            </div>
+            <div class="form-group mt-3">
+              <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
+            </div>
+            <div class="form-group mt-3">
+              <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
+            </div>
+            <div class="my-3">
+              <div class="loading">Loading</div>
+              <div class="error-message"></div>
+              <div class="sent-message">Your message has been sent. Thank you!</div>
+            </div>
+            <div class="text-center"><button type="submit">Send Message</button></div>
+          </form>
+        </div>
+      </div>
+      
+
+    </div>
+
+  </div>
+</section><!-- End Contact Section -->
+
+
+{% endblock %}

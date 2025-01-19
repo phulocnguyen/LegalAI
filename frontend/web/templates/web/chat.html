@@ -1,0 +1,202 @@
+
+{% extends 'web/main.html' %}
+{% load static %}
+
+{% block main %}
+
+<section class="breadcrumbs">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center">
+      <h2>Chat with AI</h2>
+      <ol>
+        <li><a href="/">Home</a></li>
+        <li>Chat</li>
+      </ol>
+    </div>
+  </div>
+</section><!-- End Breadcrumbs Section -->
+
+<section class="inner-page pt-4">
+  <div class="container">
+    <div class="chat-wrapper">
+      <div class="history-container">
+        <h4>Chat History</h4>
+        <button id="new-chat-btn" onclick="startNewChat()">New Chat</button>
+        <div id="chat-history">
+          <!-- Chat history items will be displayed here -->
+          <div class="history-item"
+            onclick="loadCurrentChat('This is the previous chat message')">
+            <span class="history-timestamp">2024-11-04 10:00</span>
+          </div>
+          <!-- Add more history items as needed -->
+        </div>
+      </div>
+      <div class="chat-container">
+        <div class="chat-box" id="chat-box">
+          <!-- Messages will be displayed here -->
+        </div>
+        <div class="input-group">
+          <input type="text" id="user-input"
+            placeholder="Type your message here..." />
+          <button id="send-btn">Send</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const chatBox = document.getElementById('chat-box');
+  const userInput = document.getElementById('user-input');
+  const sendBtn = document.getElementById('send-btn');
+
+  // Function to display messages in the chat box
+  function displayMessage(message, sender) {
+    const messageDiv = document.createElement('div');
+    messageDiv.classList.add('message');
+    messageDiv.classList.add(sender); // 'user' or 'ai'
+    messageDiv.textContent = message;
+    chatBox.appendChild(messageDiv);
+    chatBox.scrollTop = chatBox.scrollHeight; // Scroll to the bottom
+  }
+
+  // Load the current chat when history item is clicked
+  function loadCurrentChat(previousMessage) {
+    chatBox.innerHTML = ''; // Clear current chat
+    displayMessage(previousMessage, 'ai'); // Display the previous chat message
+  }
+
+  // Start a new chat
+  function startNewChat() {
+    chatBox.innerHTML = ''; // Clear current chat
+    userInput.value = ''; // Clear input field
+  }
+
+  // Handle send button click
+  sendBtn.addEventListener('click', () => {
+    const userMessage = userInput.value.trim();
+    if (userMessage) {
+      displayMessage(userMessage, 'user');
+      userInput.value = ''; // Clear input field
+      
+      // Simulate AI response (replace with actual API call)
+      setTimeout(() => {
+        const aiMessage = "This is a simulated response from the AI.";
+        displayMessage(aiMessage, 'ai');
+      }, 1000);
+    }
+  });
+
+  // Allow sending message with Enter key
+  userInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      sendBtn.click();
+    }
+  });
+</script>
+
+<style>
+  html, body {
+    height: 100%;
+    margin: 0; /* Remove default margin */
+    display: flex;
+    flex-direction: column; /* Arrange elements vertically */
+}
+
+.inner-page {
+    flex: 1; /* Use remaining height */
+    display: flex;
+    justify-content: center; /* Center content */
+    align-items: flex-start; /* Align content to the top */
+    padding: 20px; /* Add padding if needed */
+    box-sizing: border-box; /* Ensure padding doesn't increase height */
+    max-width: 100%; /* Allow inner page to expand */
+}
+
+.chat-wrapper {
+    display: flex;
+    width: 100%; /* Full width */
+    height: 500px; /* Set a fixed height for the entire chat section */
+}
+
+.history-container {
+    width: 300px; /* Fixed width for history */
+    padding: 10px;
+    border-right: 1px solid #ccc; /* Add separator */
+    overflow-y: auto; /* Scroll for overflow */
+}
+
+.history-item {
+    padding: 10px;
+    cursor: pointer; /* Indicate clickable item */
+}
+
+.history-timestamp {
+    display: block; /* Show timestamp on a new line */
+}
+
+.chat-container {
+    flex: 1; /* Take up remaining space */
+    display: flex;
+    flex-direction: column; /* Arrange items vertically */
+    height: 100%; /* Full height */
+}
+
+.chat-box {
+    flex: 1; /* Fill remaining space */
+    padding: 10px;
+    overflow-y: auto; /* Scroll if overflow */
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column; /* Changed from column-reverse to column */
+}
+
+.input-group {
+    display: flex;
+    border-top: 1px solid #ccc;
+}
+
+#user-input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+}
+
+#send-btn {
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#send-btn:hover {
+    background-color: #0056b3;
+}
+
+#new-chat-btn {
+    margin-bottom: 10px; /* Space below the button */
+}
+
+.message {
+    margin: 5px 0;
+    max-width: 70%; /* Max width for messages */
+    padding: 10px;
+    border-radius: 5px;
+    word-wrap: break-word; /* Wrap long words */
+}
+
+.user {
+    align-self: flex-end; /* Align user messages to the right */
+    background-color: #d1e7dd; /* User message background */
+}
+
+.ai {
+    align-self: flex-start; /* Align AI messages to the left */
+    background-color: #f8d7da; /* AI message background */
+}
+
+</style>
+
+
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'web/main.html' %}
+{% load static %}
+
+{% block main %}
+<section class="breadcrumbs">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center">
+      <h2>{{ docx_file.name }}</h2>
+      <ol>
+        <li><a href="/">Home</a></li>
+        <li><a href="{% url 'category_list' %}">Danh mục</a></li>
+        <li>{{ docx_file.name }}</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="inner-page pt-4">
+  <div class="doc-content">
+    <embed src="{% url 'file_detail' docx_file.id %}" width="100%" height="800px" />
+  </div>
+</section>
+{% endblock %}
