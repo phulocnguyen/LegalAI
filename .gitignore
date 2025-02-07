@@ -2,4 +2,5 @@
 *.docx
 media 
 test
-web/__pycache/
+web/__pycache__/
+*.pyc
