@@ -7,10 +7,10 @@ from langchain_openai import ChatOpenAI
 
 load_dotenv()
 
-api_key = ""
+api_key = os.getenv("OPENAI_API_KEY")
 
 # Khởi tạo các đối tượng cần thiết cho AI
-embedding = get_openai_embedding(api_key=api_key)
+embedding = get_openai_embedding()
 retrievers = get_retriever(source="dan_su", embedding=embedding)
 gpt_llm = ChatOpenAI(temperature=0, openai_api_key=api_key)
 basicrag = BasicRAG(retrievers, gpt_llm)
