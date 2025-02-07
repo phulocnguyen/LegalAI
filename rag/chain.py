@@ -1,7 +1,7 @@
 import os
 from operator import itemgetter
 from dotenv import load_dotenv
-from rag.retriever import get_retriever
+from .retriever import get_retriever
 from typing import List, Literal
 from langchain_openai import ChatOpenAI
 from langchain.prompts import ChatPromptTemplate

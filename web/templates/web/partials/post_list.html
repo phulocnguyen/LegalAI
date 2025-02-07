@@ -1,0 +1,9 @@
+{% for post in posts %}
+    <div class="post" data-id="{{ post.id }}">
+        <h3>{{ post.title }}</h3>
+        <p>{{ post.content|truncatewords:20 }}</p>
+        <button class="view-post">Xem chi tiết</button>
+    </div>
+{% empty %}
+    <p>Không có bài viết nào.</p>
+{% endfor %}

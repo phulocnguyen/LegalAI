@@ -1,0 +1,24 @@
+<div class="post" data-id="{{ post.id }}">
+    <button id="backToList">Quay lại</button>
+
+    <h2>{{ post.title }}</h2>
+    <p>{{ post.content }}</p>
+    
+    <!-- Danh sách bình luận -->
+    <div class="comments-list">
+        {% for comment in post.comments.all %}
+            <div class="comment">
+                <strong>{{ comment.author.username }}</strong>
+                <p>{{ comment.content }}</p>
+                <small>{{ comment.created_at }}</small>
+            </div>
+        {% endfor %}
+    </div>
+    
+    <!-- Form thêm bình luận -->
+    <form id="addCommentForm">
+        {% csrf_token %}
+        <textarea name="content" required></textarea>
+        <button type="submit">Gửi bình luận</button>
+    </form>
+</div>

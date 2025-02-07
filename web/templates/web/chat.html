@@ -1,0 +1,106 @@
+{% extends 'web/main.html' %}
+{% load static %}
+
+{% block main %}
+
+<section class="breadcrumbs">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center">
+      <h2>Legal AI</h2>
+      <ol>
+        <li><a href="/">Home</a></li>
+        <li>Chat</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="inner-page pt-4">
+  <link href="{% static 'assets/css/chat.css' %}" rel="stylesheet">
+
+  <div class="chat-container">
+    <!-- Chat -->
+    <div class="chat-box-container">
+      <div class="chat-box" id="chat-box">
+        <div class="messages" id="messages">
+          <div class="message ai-message">Hi there! How can I assist you?</div>
+        </div>
+        <form id="chat-form">
+          <div class="message-input">
+            <textarea name="question" id="message-input" placeholder="Type your message..."></textarea>
+            <button type="submit" id="send-button">Send</button>
+          </div>
+        </form>
+        <div id="loading" style="display: none;">Loading...</div> <!-- Hoạt ảnh chờ -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const chatForm = document.getElementById('chat-form');
+  const messageInput = document.getElementById('message-input');
+  const sendButton = document.getElementById('send-button');
+  const messages = document.getElementById('messages');
+  const loadingIndicator = document.getElementById('loading');
+
+  chatForm.addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const question = messageInput.value.trim();
+    if (!question) return;
+
+    // Hiển thị tin nhắn của người dùng
+    const userMessage = document.createElement('div');
+    userMessage.className = 'message user-message';
+    userMessage.textContent = question;
+    messages.appendChild(userMessage);
+
+    // Hiển thị loading và ẩn thanh nhập
+    loadingIndicator.style.display = 'block';
+    chatForm.style.display = 'none';
+
+    // Gửi AJAX request
+    fetch("{% url 'chat_with_ai' %}", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "X-CSRFToken": "{{ csrf_token }}",
+      },
+      body: new URLSearchParams({ "question": question })
+    })
+    .then(response => response.json())
+    .then(data => {
+      loadingIndicator.style.display = 'none'; // Ẩn loading
+      chatForm.style.display = 'block'; // Hiện lại thanh nhập
+      messageInput.value = ''; // Xóa nội dung input
+
+      if (data.error) {
+        // Hiển thị lỗi nếu có
+        const errorMessage = document.createElement('div');
+        errorMessage.className = 'message error-message';
+        errorMessage.textContent = data.error;
+        messages.appendChild(errorMessage);
+      } else {
+        // Hiển thị câu trả lời của AI
+        const aiMessage = document.createElement('div');
+        aiMessage.className = 'message ai-message';
+        aiMessage.textContent = data.answer;
+        messages.appendChild(aiMessage);
+      }
+
+      // Cuộn đến tin nhắn mới nhất
+      messages.scrollTop = messages.scrollHeight;
+    })
+    .catch(error => {
+      loadingIndicator.style.display = 'none';
+      chatForm.style.display = 'flex';
+      const errorMessage = document.createElement('div');
+      errorMessage.className = 'message error-message';
+      errorMessage.textContent = "Lỗi trong quá trình xử lý.";
+      messages.appendChild(errorMessage);
+    });
+  });
+</script>
+
+{% endblock %}

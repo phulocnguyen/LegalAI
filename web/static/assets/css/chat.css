@@ -1,0 +1,141 @@
+.chat-container {
+  display: flex;
+  max-width: 70%;
+  margin: 0 auto;
+}
+
+.chat-history-container {
+  flex: 1;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow-y: auto; /* Thanh cuộn dọc cho phần lịch sử */
+  max-height: 500px;
+  display: flex;
+  flex-direction: column;
+}
+
+.new-chat {
+  padding: 10px;
+  text-align: center;
+  background-color: #f7f7f7;
+}
+
+.new-chat button {
+  padding: 8px 16px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  background-color: #b78e47;
+  color: #fff;
+  cursor: pointer;
+}
+
+.new-chat button:hover {
+  background-color: #b78e47;
+}
+
+.chat-history {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-item {
+  padding: 10px;
+  margin-bottom: 8px;
+  border-radius: 5px;
+  background-color: #e9ecef;
+  cursor: pointer;
+}
+
+.current-chat {
+  background-color: #d4edda;
+}
+
+/* Chat Box Container */
+.chat-box-container {
+  flex: 2;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-box {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.messages {
+  flex-grow: 1;
+  padding: 10px;
+  height: 500px;
+  max-height: 500px; /* Chiều cao cố định cho khung chat */
+  overflow-y: scroll; /* Bật thanh cuộn riêng cho phần tin nhắn */
+  display: flex;
+  flex-direction: column;
+}
+
+.message {
+  margin-bottom: 10px;
+  padding: 8px;
+  border-radius: 10px;
+  max-width: 80%;
+}
+
+.user-message {
+  align-self: flex-end;
+  background-color: #b78e47;
+  color: #fff;
+}
+
+.ai-message {
+  align-self: flex-start;
+  background-color: #f1f1f1;
+  color: #333;
+}
+
+.message-input {
+  display: flex;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+}
+
+.message-input textarea {
+  flex-grow: 1;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  resize: none;
+}
+
+.message-input button {
+  padding: 8px 16px;
+  border: none;
+  background-color: #b78e47;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-left: 10px;
+}
+
+.message-input button:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}
+
+.message-input textarea:disabled {
+  background-color: #f9f9f9;
+}
+
+#loading {
+  font-weight: bold;
+  font-family: sans-serif;
+  font-size: 30px;
+  animation:c1 1s linear infinite alternate;
+  text-align: center;
+  padding: 10px 0;
+  display: none; /* Ẩn loading khi không cần */
+}
+@keyframes c1 {to{opacity: 0}}

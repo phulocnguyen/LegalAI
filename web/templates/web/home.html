@@ -1,0 +1,525 @@
+{% extends 'web/main.html' %}
+{% load static %}
+
+{% block main %}
+
+<!-- ======= Hero Section ======= -->
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var header = document.getElementById("header");
+    if (header) {
+      header.classList.add("header-transparent");
+    }
+  });
+</script>
+
+<section id="hero">
+  <div class="hero-container" data-aos="zoom-in" data-aos-delay="100">
+    <h1>Welcome to LegalAI</h1>
+    <a href="/chat" class="btn-get-started">CHAT NOW</a>
+  </div>
+</section><!-- End Hero Section -->
+
+<!-- ======= About Section ======= -->
+<section id="about">
+  <div class="container" data-aos="fade-up">
+    <div class="row about-container">
+
+      <div class="col-lg-6 content order-lg-1 order-2">
+        <h2 class="title">About Us</h2>
+        <p>
+          LegalAI là một nền tảng công nghệ pháp lý tiên tiến được phát triển nhằm đáp ứng nhu cầu ngày càng cao về thông tin và tư vấn pháp luật trong bối cảnh Việt Nam hiện đại. Với LegalAI, người dùng không chỉ tiếp cận các kiến thức pháp luật Việt Nam cơ bản mà còn có thể thảo luận, trao đổi và nhận hỗ trợ trực tiếp từ các chuyên gia trong lĩnh vực luật pháp, tạo nên một hệ sinh thái pháp lý đa dạng và toàn diện
+        </p>
+
+        <!--
+        <div class="icon-box" data-aos="fade-up" data-aos-delay="100">
+          <div class="icon"><i class="bi bi-briefcase"></i></div>
+          <h4 class="title"><a href="">Eiusmod Tempor</a></h4>
+          <p class="description">Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum
+            soluta nobis est eligendi</p>
+        </div>
+        -->
+
+      </div>
+
+      <div class="col-lg-6 background order-lg-2 order-1" data-aos="fade-left" data-aos-delay="100"></div>
+    </div>
+
+  </div>
+</section><!-- End About Section -->
+
+<!-- ======= Blog Section ======= -->
+<section id="blog">
+  <!-- Form Tạo Bài Viết -->
+  <div id="create_blog">
+    <h2>Tạo Bài Viết Mới</h2>
+    <form id="createPostForm" method="post">
+      {% csrf_token %}
+      {{ post_form.as_p }}
+      <button type="submit">Đăng Bài</button>
+    </form>
+  </div>
+
+  <!-- Danh Sách Bài Viết -->
+  <div id="blog_list">
+    <input type="text" id="searchBox" placeholder="Tìm kiếm bài viết...">
+    <div id="postList">
+      {% include 'web/partials/post_list.html' %}
+    </div>
+  </div>
+
+  <!-- Chi Tiết Bài Viết và Bình Luận -->
+  <div id="post_detail" style="display:none;">
+    <!-- Nội dung bài viết và bình luận sẽ được AJAX load vào đây -->
+  </div>
+
+  <style>
+    /* Cấu trúc chung */
+#createPostForm {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 30px;
+}
+
+/* Style cho các trường form */
+form p {
+    margin-bottom: 15px;
+}
+
+form input[type="text"], form textarea, form select {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0 15px 0;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 16px;
+    background-color: #f9f9f9;
+}
+
+/* Hiệu ứng focus */
+form input[type="text"]:focus, form textarea:focus, form select:focus {
+    border-color: #3498db;
+    outline: none;
+    background-color: #eaf2f8;
+}
+
+/* Style cho nút submit */
+button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: #3498db;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #2980b9;
+}
+
+button[type="submit"]:focus {
+    outline: none;
+}
+
+    /* Danh Sách Bài Viết */
+    #blog_list {
+      margin: 20px auto;
+      max-width: 90%;
+      padding: 20px;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      transition: box-shadow 0.3s ease;
+      max-height: 800px;
+      overflow-y: auto;
+    }
+
+    #blog_list:hover {
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    #searchBox {
+      padding: 12px;
+      width: 100%;
+      margin-bottom: 20px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      transition: box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+
+    #searchBox:focus {
+      border-color: #2ecc71;
+      box-shadow: 0 0 5px rgba(46, 204, 113, 0.5);
+    }
+
+    .post {
+      padding: 15px;
+      margin-bottom: 10px;
+      background-color: #ffffff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .post:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .post h3 {
+      color: #34495e;
+    }
+
+    .post p {
+      color: #7f8c8d;
+    }
+
+    /* Nút Xem chi tiết */
+    .view-post {
+      margin-top: 10px;
+      background-color: #2ecc71;
+      padding: 8px 12px;
+      color: white;
+      border-radius: 4px;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    .view-post:hover {
+      background-color: #27ae60;
+    }
+
+    /* Chi Tiết Bài Viết */
+    #post_detail {
+      max-height: 800px;
+      overflow-y: auto;
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    #post_detail:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    #post_detail h2 {
+      color: #3498db;
+    }
+
+    #backToList {
+      background-color: #e4aaa3;
+      color: white;
+      padding: 1px 2px;
+      border-radius: 4px;
+      font-weight: unset;
+      transition: background-color 0.3s ease;
+    }
+
+    #backToList:hover {
+      background-color: #c0392b;
+    }
+
+    /* Bình luận */
+    .comments-list {
+      margin-top: 20px;
+    }
+
+    .comment {
+      padding: 10px;
+      margin-top: 10px;
+      background-color: #f5f5f5;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+    }
+
+    .comment strong {
+      color: #2c3e50;
+    }
+
+    .comment p {
+      color: #555;
+    }
+
+    .comment small {
+      color: #888;
+      font-size: 12px;
+    }
+
+    /* Form thêm bình luận */
+    #addCommentForm textarea {
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      margin-bottom: 10px;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    #addCommentForm textarea:focus {
+      border-color: #3498db;
+      box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+    }
+
+    #addCommentForm button {
+      background-color: #3498db;
+      color: white;
+      padding: 10px;
+      border-radius: 4px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    #addCommentForm button:hover {
+      background-color: #2980b9;
+    }
+  </style>
+</section>
+<script>
+  function getCSRFToken() {
+    let csrfToken = document.querySelector('[name=csrfmiddlewaretoken]');
+    return csrfToken ? csrfToken.value : '';
+  }
+  document.addEventListener("DOMContentLoaded", function () {
+    // Tạo bài viết mới
+    document.getElementById("createPostForm").onsubmit = function (e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      fetch("/create_post/", {
+        method: "POST",
+        body: formData,
+        headers: {
+          "X-Requested-With": "XMLHttpRequest",
+          "X-CSRFToken": getCSRFToken()  // Thêm CSRF token vào header
+        }
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.status === 'success') {
+            loadPosts();
+            alert("Bài viết đã được đăng thành công!");
+            this.reset();
+          } else {
+            alert("Đăng bài viết thất bại. Vui lòng thử lại.");
+          }
+        });
+    };
+
+
+    // Tìm kiếm bài viết
+    document.getElementById("searchBox").oninput = function () {
+      fetch("/search_posts/?query=" + this.value)
+        .then(response => response.text())
+        .then(html => {
+          document.getElementById("postList").innerHTML = html;
+        });
+    };
+
+    // Hiển thị chi tiết bài viết
+    function viewPost(postId) {
+      fetch(`/post_detail/${postId}/`)
+        .then(response => response.text())
+        .then(html => {
+          document.getElementById("create_blog").style.display = "none";
+          document.getElementById("blog_list").style.display = "none";
+          document.getElementById("post_detail").style.display = "block";
+          document.getElementById("post_detail").innerHTML = html;
+          document.getElementById("backToList").onclick = backToList;
+        });
+    }
+
+    // Quay lại danh sách bài viết và form tạo bài viết
+    function backToList() {
+      document.getElementById("create_blog").style.display = "block";
+      document.getElementById("blog_list").style.display = "block";
+      document.getElementById("post_detail").style.display = "none";
+    }
+
+    // Xử lý click vào nút "Xem chi tiết"
+    document.addEventListener("click", function (e) {
+      if (e.target && e.target.classList.contains("view-post")) {
+        const postId = e.target.closest(".post").getAttribute("data-id");
+        viewPost(postId);
+      }
+    });
+
+
+    // Tải lại danh sách bài viết
+    function loadPosts() {
+      fetch("/search_posts/")
+        .then(response => response.text())
+        .then(html => {
+          document.getElementById("postList").innerHTML = html;
+        });
+    }
+    // Thêm bình luận
+    document.getElementById("post_detail").addEventListener("submit", function (e) {
+      if (e.target && e.target.id === "addCommentForm") {
+        e.preventDefault();  // Ngừng hành động mặc định
+        const postElement = e.target.closest(".post");
+
+        // Kiểm tra xem phần tử .post có tồn tại không
+        if (postElement) {
+          const postId = postElement.getAttribute("data-id");
+          const formData = new FormData(e.target);
+
+          fetch(`/add_comment/${postId}/`, {
+            method: "POST",
+            body: formData,
+            headers: {
+              "X-Requested-With": "XMLHttpRequest",
+              "X-CSRFToken": getCSRFToken()  // Thêm CSRF token vào header
+            }
+          })
+            .then(response => response.json())
+            .then(data => {
+              console.log('Response:', data);  // Log phản hồi từ server
+              if (data.status === 'success') {
+                alert("Bình luận đã được thêm thành công!");
+                e.target.reset(); // Reset form
+
+                // Cập nhật giao diện với bình luận mới
+                const commentsContainer = postElement.querySelector('.comments-list');
+                if (commentsContainer) {
+                  const newCommentHtml = `
+                                <div class="comment">
+                                    <strong>${data.comments[0].author}</strong>
+                                    <p>${data.comments[0].content}</p>
+                                    <small>${data.comments[0].created_at}</small>
+                                </div>
+                            `;
+                  commentsContainer.innerHTML = newCommentHtml + commentsContainer.innerHTML;  // Thêm bình luận mới lên đầu danh sách
+                }
+              } else {
+                alert("Thêm bình luận thất bại. Vui lòng thử lại.");
+              }
+            })
+            .catch(error => {
+              console.error('Error:', error);  // Log lỗi nếu có
+              alert("Có lỗi xảy ra. Vui lòng thử lại.");
+            });
+        } else {
+          console.error('Không tìm thấy phần tử .post!');
+        }
+      }
+    });
+
+    // Quay lại danh sách bài viết và form tạo bài viết
+    function backToList() {
+      document.getElementById("create_blog").style.display = "block";
+      document.getElementById("blog_list").style.display = "block";
+      document.getElementById("post_detail").style.display = "none";
+    }
+
+    // Tải lại chi tiết bài viết
+    function loadPostDetail(postId) {
+      fetch(`/post_detail/${postId}/`)
+        .then(response => response.text())
+        .then(html => {
+          document.getElementById("post_detail").innerHTML = html;
+          document.getElementById("backToList").onclick = backToList;
+        });
+    }
+  });
+
+</script>
+
+<!-- ======= Contact Section ======= -->
+<section id="contact">
+  <div class="container">
+    <div class="section-header">
+      <h3 class="section-title">Contact</h3>
+      <p class="section-description">You can send us feedback here</p>
+    </div>
+  </div>
+
+  <!-- Uncomment below if you want to use dynamic maps -->
+  <iframe
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3723.8683133802033!2d105.78079837529022!3d21.037954480613568!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x313454caaf9fa467%3A0xe0207e2709fbbcd0!2sG2%20auditorium%2C%20University%20of%20Engineering%20and%20Technology%20-%20Vietnam%20National%20University!5e0!3m2!1sen!2s!4v1715803512471!5m2!1sen!2s"
+    width="100%" height="380" style="border:0;" allowfullscreen loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+
+      <div class="col-lg-3 col-md-4">
+
+        <div class="info">
+          <div>
+            <i class="bi bi-geo-alt"></i>
+            <p>144 Xuan Thuy<br>Ha Noi, Viet Nam</p>
+          </div>
+
+          <div>
+            <i class="bi bi-envelope"></i>
+            <p>info@example.com</p>
+          </div>
+
+          <div>
+            <i class="bi bi-phone"></i>
+            <p>(+84) xxx xxx xxx</p>
+          </div>
+        </div>
+
+        <div class="social-links">
+          <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+          <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+          <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+        </div>
+
+      </div>
+
+      <div class="col-lg-5 col-md-8">
+        <div class="form">
+          <form action="{% url 'home' %}" method="post" role="form" class="php-email-form">
+            {% csrf_token %}
+            <div class="form-group">
+              <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
+            </div>
+            <div class="form-group mt-3">
+              <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
+            </div>
+            <div class="form-group mt-3">
+              <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
+            </div>
+            <div class="form-group mt-3">
+              <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
+            </div>
+            <div class="my-3">
+              <div class="loading">Loading</div>
+              <div class="error-message"></div>
+              <div class="sent-message">Your message has been sent. Thank
+                you!</div>
+            </div>
+            <div class="text-center"><button type="submit">Send
+                Message</button></div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section><!-- End Contact Section -->
+
+{% endblock %}

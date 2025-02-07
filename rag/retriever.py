@@ -2,7 +2,7 @@ import pandas as pd
 import csv
 from langchain_core.embeddings import Embeddings
 from langchain_community.vectorstores import FAISS
-from rag.embedding import get_openai_embedding
+from .embedding import get_openai_embedding
 
 
 def get_retriever(source: str, embedding: Embeddings):

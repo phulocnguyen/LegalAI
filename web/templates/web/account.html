@@ -1,0 +1,86 @@
+{% extends 'web/main.html' %}
+{% load static %}
+
+{% block main %}
+<!-- ======= Breadcrumbs Section ======= -->
+<section class="breadcrumbs">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2>Account Page</h2>
+            <ol>
+                <li><a href="/">Home</a></li>
+                <li>Account Page</li>
+            </ol>
+        </div>
+    </div>
+</section><!-- End Breadcrumbs Section -->
+
+<section class="inner-page pt-4">
+    <div class="container">
+
+        {% for message in messages %}
+
+        <div class="alert alert-{{message.tags}}" role="alert" style="margin-top: 30px">
+            <h5>{{message}}</h5>
+        </div>
+
+        {% endfor %}
+
+
+        <link href="{% static 'assets/css/account.css' %}" rel="stylesheet">
+
+        <div class="cont">
+            <!-- Form đăng nhập -->
+            <div class="form sign-in">
+                <h2>Welcome</h2>
+                <form method="post" action="{% url 'account' %}">
+                    {% csrf_token %}
+                    {{ login_form.non_field_errors }}
+                    <label>
+                        <span>Username</span>
+                        <input type="text" name="username" required />
+                    </label>
+                    <label>
+                        <span>Password</span>
+                        <input type="password" name="password" required />
+                    </label>
+                    <p class="forgot-pass">Forgot password?</p>
+                    <button type="submit" class="submit" name="sign-in">Sign In</button>
+                </form>
+            </div>
+        
+            <div class="sub-cont">
+                <div class="img">
+                    <div class="img__text m--up">
+                        <h3>Don't have an account? Please Sign up!</h3>
+                    </div>
+                    <div class="img__text m--in">
+                        <h3>If you already have an account, just sign in.</h3>
+                    </div>
+                    <div class="img__btn">
+                        <span class="m--up">Sign Up</span>
+                        <span class="m--in">Sign In</span>
+                    </div>
+                </div>
+        
+                <!-- Form đăng ký -->
+                <div class="form sign-up">
+                    <h2>Create your Account</h2>
+                    <form method="post" action="{% url 'account' %}">
+                        {% csrf_token %}
+                        {{ signup_form.as_p }}
+                        <button type="submit" class="submit" name="sign-up">Sign Up</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <!-- JavaScript cho toggle giữa Sign In và Sign Up -->
+        <script>
+            document.querySelector('.img__btn').addEventListener('click', function () {
+                document.querySelector('.cont').classList.toggle('s--signup');
+            });
+        </script>
+    </div>
+</section>
+{% endblock %}
