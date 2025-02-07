@@ -7,9 +7,8 @@ load_dotenv()
 
 def get_openai_embedding(model_name="text-embedding-3-small"):
     # Lấy API key từ biến môi trường nếu không được truyền trực tiếp
-    if api_key is None:
-        api_key = os.getenv("OPENAI_API_KEY")
-        if not api_key:
+    api_key = os.getenv("OPENAI_API_KEY")
+    if not api_key:
             raise ValueError("API key không được cung cấp và không tìm thấy biến môi trường OPENAI_API_KEY.")
     
     return OpenAIEmbeddings(model=model_name, api_key=api_key)
