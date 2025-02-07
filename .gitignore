@@ -4,3 +4,5 @@ media
 test
 web/__pycache__/
 *.pyc
+rag/__pycache__/embedding.cpython-311.pyc
+web/__pycache__/ai_service.cpython-311.pyc
