@@ -34,7 +34,7 @@ def process_questions(file_path: str, vectorstore):
             print(f"Processed question: {question}")
 
 if __name__ == "__main__":
-    embedding = get_openai_embedding(api_key="")
+    embedding = get_openai_embedding()
     vectorstore = get_vectorstore("dan_su", embedding)
     relevant_documents = vectorstore.similarity_search_with_relevance_scores(
         "Trong trường hợp hai bên ký hợp đồng vay tài sản mà không có văn bản, chỉ bằng lời nói, nếu bên vay không trả tiền đúng hạn thì bên cho vay có quyền khởi kiện đòi nợ không?"
