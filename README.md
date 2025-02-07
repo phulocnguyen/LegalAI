@@ -2,10 +2,10 @@
 LegalAI is an advanced AI-powered platform designed to assist users in navigating Vietnam’s legal landscape. By leveraging state-of-the-art Large Language Models (LLMs) and Retrieval-Augmented Generation (RAG) techniques, LegalAI provides accurate and context-aware legal assistance. The platform integrates an intelligent chatbot, a legal document library, and an interactive discussion forum, making legal knowledge more accessible to the public.
 
 ### Key Features
-🧠 AI-Powered Legal Chatbot: Uses fine-tuned LLMs and RAG for accurate legal assistance.
-📚 Legal Document Library: Fast keyword-based and semantic search with MongoDB storage.
-💬 Discussion Forum: Connects users and legal experts with threaded discussions and role-based access.
-🔐 Secure User Authentication: Implements OAuth2, JWT, and data encryption for privacy protection.
+-**AI-Powered Legal Chatbot**: Uses fine-tuned LLMs and RAG for accurate legal assistance.
+-**Legal Document Library**: Fast keyword-based and semantic search with MongoDB storage.
+-**Discussion Forum**: Connects users and legal experts with threaded discussions and role-based access.
+-**Secure User Authentication**: Secure user account management.
 
 ### Home Page
 ![Home Page](figures/home.png)
